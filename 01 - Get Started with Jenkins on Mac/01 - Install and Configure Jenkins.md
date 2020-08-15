@@ -96,3 +96,65 @@ Under the Build History Click the job number <b>#1</b>, and select console outpu
 systemctl stop jenkins
 systemctl start jenkins
 ```
+---
+
+# Install Plugins
+
+## Verify Git
+In the browser cloud console, navigate to Compute Engine, VM Instances. Click on the SSH button to open an ssh terminal.
+```
+git --version
+```
+
+If required Install Git
+```
+sudo apt-get install git
+```
+
+## Install Github Plugin
+From the browser Dashboard Jenkins page, click
+```
+Manage Jenkins
+```
+Click Manage Plugins and then select the available Tab
+
+```
+Type "Github", check Github Integration and then click Install without restart
+✅ GitHub Integration
+👏 Githun plugin installed.
+```
+
+## Install Maven
+
+In the browser cloud console, navigate to Compute Engine, VM Instances. Click on the SSH button to open an ssh terminal.
+
+## Verify Maven
+
+```
+mvn --version
+```
+
+If required Install Maven
+
+```
+sudo apt-get update
+sudo apt-get install maven
+mvn --version
+```
+>Apache Maven 3.6.0 <br />
+>Maven home: /usr/share/maven<br />
+
+## Configure Jenkins
+
+From the browser Dashboard Jenkins page, click Manage Jenkins and then click Global Tool Configurations
+
+Set Java and Maven
+```
+Name: Java8
+JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+```
+```
+Name: DefaultMaven
+MAVEN_HOME: /usr/share/maven
+👏 Click Save ~ Basic Configuration completed
+```
