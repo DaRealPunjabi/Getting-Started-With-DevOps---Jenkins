@@ -91,7 +91,7 @@ Build Now
 ## Examine the Job
 Under the Build History Click the job number <b>#1</b>, and select console output
 
-#Stop and Start Jenkins
+# Stop and Start Jenkins
 ```
 systemctl stop jenkins
 systemctl start jenkins
