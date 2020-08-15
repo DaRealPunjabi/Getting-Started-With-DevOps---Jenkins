@@ -1,78 +1,98 @@
-# Install and Configure Google SDK
-
+# Install and Configure Jenkins
 
 ## Prerequisite
-Cloud SDK requires Python. Supported versions are 3.5 to 3.7, and 2.7.9 or higher. To check the Python version installed on your system:
+The following instruction requires GCP Compute Instance, see article: https://medium.com/@shiv.jalli_26300/gcp-create-a-compute-instance-5343ac3ac443
+
+# Installation
+In the browser, cloud console, navigate to Compute Engine, VM Instances. Click on the SSH button to open an ssh terminal.
+
+## Install Java 8
+Enter the following commands in the ssh terminal
+```
+java -version
+sudo apt-get update
+sudo apt install openjdk-8-jdk
+java -version
+```
+## Set up to Install Jenkins
+To install the latest version of Jenkins, add the repository key to the system, and add the repository address to the sources list.
+```
+wget -q -O \
+  - https://pkg.jenkins.io/debian-stable/jenkins.io.key \
+  | sudo apt-key add -
+```
+```
+sudo sh -c \
+  'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
+  /etc/apt/sources.list.d/jenkins.list'
+```
+## Install Jenkins
+```
+sudo apt-get update
+sudo apt-get install jenkins
+```
+## Check Jenkins is running
+```
+systemctl status jenkins
+```
+>● jenkins.service — LSB: Start Jenkins at boot time <br />
+Loaded: loaded (/etc/init.d/jenkins; generated) <br />
+Active: active (exited) since Fri 2020–08–14 15:14:21 UTC; 1min 19s ago <br />
+
+# Get Information to Invoke Jenkins
+
+Get the initialAdminPassword
+```
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+## Open Jenkins in Browser
+```
+http://<external IP address of Virtual Machine>:8080/
+```
+
+## Enter the initialAdminPassword
+```Enter new username, password details
+Install suggested plugins
+👏 Welcome to Jenkins!
+```
+
+# Create the First Job
+From the browser Dashboard (initial) Jenkins page, click
 
 ```
-python -V
+New Item
 ```
 
-# Install the SDK
-
-Enter the following at a command prompt to save the install script locally
+## Enter an item name
 ```
-curl https://sdk.cloud.google.com > install.sh
+First Job
 ```
-Run the script using bash or zsh
-```zsh install.sh --disable-prompts
+
+## Click Build Environment and check
 ```
->— disable-prompts ~ disable prompts <br />
->— install-dir=DIRECTORY ~set the installation root directory to DIRECTORY. The Cloud SDK will be installed in DIRECTORY/google-cloud-sdk. The default is $HOME. <br />
->❗️ Close and restart the terminal for the changes to take effects. <br />
-
-# Initialise the SDK
-Use the gcloud init command to perform several common SDK setup tasks. These include authorizing the SDK tools to access Google Cloud Platform using your user account credentials and setting up the default SDK configuration.
+✅ Delete workspace before build starts
+✅ Add timestamps to the Console Output
 ```
-gcloud init
+Click Build, Click “add build step” and then select “Execute shell”
+
+Enter a shell command and click Save
+
 ```
-## Create a configuration
-<pre>
-Pick configuration to use:
- [1] Re-initialize this configuration [default] with new settings
- [2] Create a new configuration
-Please enter your numeric choice: <b>2</b>
-</pre>
-
-## Give it a name …
-<pre>
-Enter configuration name. Names start with a lower case letter and
-contain only lower case letters a-z, digits 0–9, and hyphens ‘-’:  <b>darealpunjabi-20200813</b>
-</pre>
-
-## Authenticate to Google Cloud
-<pre>
-You must log in to continue. Would you like to log in (Y/n)? <b>Y</b>
-This will open your browser and allow you to log in to GCP account. Once verified …
-You are logged in as: [your-email@gmail.com].
-Pick cloud project to use:
- [1] Create a new project
-Please enter your numeric choice: <b>1</b>
-Enter a Project ID. <b>darealpunjabi-20200813</b>
-👏 Your current project has been set to: [darealpunjabi-20200813].
-</pre>
-
-# Working with Configurations
-
-[gcloud config | Cloud SDK Documentation | Google Cloud](https://cloud.google.com/sdk/gcloud/reference/config "Google Developer Tools")
-
-## List the Configuration
+echo "This is my first job"
 ```
-gcloud config configurations list
-```
->default <br />
->darealpunjabi-20200813 <br />
 
-## Describe a Configuration
-```
-gcloud config configurations describe darealpunjabi-20200813
-```
->is_active: true <br />
->name: devops-20200813 <br />
->properties: <br />
-> ▫️ core: <br />
-> ▫ account: your-email@gmail.com <br />
-> ▫ project: darealpunjabi-20200813 <br />
+## Build it
+From the browser Project First Job page, click
 
-## Activate another Configuration
-gcloud config configurations activate <config-name>
+```
+Build Now
+```
+
+## Examine the Job
+Under the Build History Click the job number <b>#1</b>, and select console output
+
+#Stop and Start Jenkins
+```
+systemctl stop jenkins
+systemctl start jenkins
+```
