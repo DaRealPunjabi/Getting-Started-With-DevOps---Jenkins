@@ -14,6 +14,18 @@ sudo apt-get update
 sudo apt install openjdk-8-jdk
 java -version
 ```
+
+## Set up Environment Variables
+
+```
+JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+JRE_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+export JAVA_HOME
+export JRE_HOME
+export PATH
+```
+
 ## Set up to Install Jenkins
 To install the latest version of Jenkins, add the repository key to the system, and add the repository address to the sources list.
 ```
